@@ -1,0 +1,334 @@
+# Sistem Manajemen Tiket Layanan Publik Terpadu
+
+**Integrasi QR Code pada Program Lapor Ibu Wali Kota Kendari**
+
+## 1. Deskripsi Proyek
+
+Sistem Manajemen Tiket Layanan Publik Terpadu merupakan aplikasi berbasis web yang dirancang untuk membantu pengelolaan laporan masyarakat pada Program Lapor Ibu Wali Kota Kendari. Sistem ini berfokus pada pencatatan laporan, verifikasi, pendistribusian kepada petugas atau perangkat daerah terkait, serta pemantauan perkembangan penanganan laporan.
+
+Sistem dilengkapi dengan fitur manajemen tiket untuk memberikan nomor identitas unik pada setiap laporan dan QR Code sebagai alternatif akses menuju formulir pelaporan. Pada halaman formulir, tersedia peta interaktif (Maps) untuk membantu masyarakat menentukan lokasi kejadian, serta tombol **Lokasi Terkini** untuk mengambil posisi perangkat pengguna setelah memperoleh izin akses lokasi.
+
+Masyarakat dapat menyampaikan pengaduan, aspirasi, atau permohonan informasi melalui formulir yang tersedia. Setelah laporan dikirim, sistem menghasilkan nomor tiket yang dapat digunakan untuk memantau perkembangan laporan. Admin mengelola laporan melalui dashboard, sedangkan petugas menangani laporan yang telah diteruskan sesuai kewenangannya.
+
+## 2. Tujuan Pengembangan
+
+- Mempermudah masyarakat dalam menyampaikan laporan.
+- Mencatat setiap laporan menggunakan nomor tiket unik.
+- Mempermudah admin dalam memverifikasi dan mendisposisikan laporan.
+- Memudahkan masyarakat menentukan lokasi kejadian melalui Maps.
+- Menyediakan tombol Lokasi Terkini untuk membantu menentukan posisi perangkat.
+- Menyediakan QR Code sebagai akses cepat menuju formulir pelaporan.
+- Memudahkan masyarakat memantau status laporan.
+- Mendokumentasikan riwayat penanganan laporan.
+
+## 3. Aktor Sistem
+
+### A. Masyarakat
+
+Masyarakat dapat mengakses formulir melalui halaman beranda atau QR Code, mengisi data laporan, menentukan lokasi kejadian melalui Maps, mengunggah dokumentasi pendukung, serta memantau perkembangan laporan menggunakan nomor tiket.
+
+### B. Admin
+
+Admin bertugas mengelola laporan masuk, memeriksa kelengkapan data, menentukan kategori laporan, meneruskan laporan kepada petugas terkait, dan memantau perkembangan penanganan.
+
+### C. Petugas atau Perangkat Daerah
+
+Petugas menerima laporan yang telah didisposisikan, menindaklanjuti laporan sesuai kewenangan, serta memperbarui informasi mengenai perkembangan atau penyelesaian laporan.
+
+## 4. Alur Kerja Sistem
+
+1. **Akses Pelaporan:** Masyarakat membuka halaman beranda, kemudian memilih tombol Buat Laporan atau memindai QR Code untuk menuju formulir.
+2. **Pengisian Formulir:** Masyarakat mengisi nama, informasi kontak, kategori laporan, judul, dan deskripsi permasalahan.
+3. **Penentuan Lokasi:** Masyarakat memilih titik kejadian pada Maps atau menekan tombol Lokasi Terkini untuk mengambil posisi perangkat. Lokasi dapat disesuaikan secara manual apabila diperlukan.
+4. **Unggah Dokumentasi:** Masyarakat melampirkan foto atau dokumentasi pendukung jika tersedia.
+5. **Pengiriman Laporan:** Sistem menyimpan data laporan dan menghasilkan nomor tiket unik.
+6. **Verifikasi:** Admin memeriksa kelengkapan laporan dan menentukan kategori laporan, yaitu pengaduan, aspirasi, atau permohonan informasi.
+7. **Disposisi:** Admin meneruskan laporan kepada petugas atau perangkat daerah yang sesuai.
+8. **Penanganan:** Petugas menindaklanjuti laporan dan memperbarui status penanganannya.
+9. **Pelacakan:** Masyarakat memasukkan nomor tiket untuk melihat perkembangan laporan.
+10. **Penyelesaian:** Status laporan diperbarui menjadi selesai dan riwayat penanganan disimpan dalam sistem.
+
+## 5. Diagram Alur Sistem
+
+Diagram berikut menggambarkan proses pelaporan, penentuan lokasi, pembuatan tiket, verifikasi, hingga penyelesaian laporan.
+
+```mermaid
+flowchart TD
+    A([Mulai]) --> B[Halaman Beranda]
+    B --> C{Pilih akses}
+    C --> D[Tombol Buat Laporan]
+    C --> E[Pindai QR Code]
+    D --> F[Halaman Formulir]
+    E --> F
+
+    F --> G[Isi Data dan Kategori Laporan]
+    G --> H[Tentukan Lokasi Kejadian]
+    H --> I{Metode Lokasi}
+    I --> J[Pilih Titik pada Maps]
+    I --> K[Gunakan Lokasi Terkini]
+    J --> L[Periksa dan Sesuaikan Lokasi]
+    K --> L
+
+    L --> M[Unggah Dokumentasi]
+    M --> N[Kirim Laporan]
+    N --> O[Sistem Menyimpan Data]
+    O --> P[Sistem Membuat Nomor Tiket]
+    P --> Q[Admin Memverifikasi Laporan]
+    Q --> R{Data Lengkap?}
+
+    R -- Tidak --> S[Meminta Perbaikan Data]
+    S --> F
+
+    R -- Ya --> T[Menentukan Kategori dan Tujuan Disposisi]
+    T --> U[Petugas Menerima Laporan]
+    U --> V[Petugas Menangani Laporan]
+    V --> W[Memperbarui Status]
+    W --> X{Penanganan Selesai?}
+
+    X -- Belum --> V
+    X -- Ya --> Y[Status Menjadi Selesai]
+    Y --> Z[Masyarakat Melacak dengan Nomor Tiket]
+    Z --> AA([Selesai])
+```
+
+## 6. Rancangan Prototype Antarmuka
+
+### A. Halaman Beranda
+
+Halaman beranda merupakan halaman awal yang digunakan masyarakat untuk mengakses layanan pelaporan.
+
+Komponen:
+- Identitas Program Lapor Ibu Wali Kota Kendari.
+- Penjelasan singkat mengenai layanan.
+- Tombol **Buat Laporan**.
+- Tombol **Lacak Laporan**.
+- QR Code untuk mengakses formulir pelaporan.
+- Informasi singkat mengenai tahapan pelaporan.
+
+### B. Halaman Formulir Laporan
+
+Halaman ini digunakan masyarakat untuk mengisi dan mengirimkan laporan.
+
+Komponen:
+- Nama pelapor.
+- Informasi kontak.
+- Kategori laporan: pengaduan, aspirasi, atau permohonan informasi.
+- Judul laporan.
+- Deskripsi permasalahan.
+- **Maps interaktif** untuk melihat dan menentukan titik lokasi kejadian.
+- Tombol **Lokasi Terkini** untuk mengambil lokasi perangkat melalui layanan geolokasi.
+- Penanda lokasi yang dapat disesuaikan secara manual pada peta.
+- Informasi koordinat atau alamat lokasi yang dipilih.
+- Unggah foto atau dokumentasi pendukung.
+- Tombol **Kirim Laporan**.
+
+**Alur penggunaan Maps dan Lokasi Terkini:**
+
+1. Masyarakat membuka bagian Lokasi Kejadian pada formulir.
+2. Sistem menampilkan peta untuk menentukan lokasi.
+3. Masyarakat dapat memilih titik secara manual atau menekan tombol Lokasi Terkini.
+4. Jika izin lokasi diberikan, peta diarahkan ke posisi perangkat dan penanda ditempatkan pada titik tersebut.
+5. Masyarakat memeriksa kembali lokasi dan menyesuaikannya jika belum tepat.
+6. Sistem menyimpan koordinat lokasi bersama data laporan setelah formulir dikirim.
+
+### C. Halaman Konfirmasi Tiket
+
+Halaman ini ditampilkan setelah laporan berhasil dikirim.
+
+Komponen:
+- Pesan keberhasilan pengiriman.
+- Nomor tiket unik.
+- Ringkasan laporan.
+- Status awal laporan.
+- Tombol **Lacak Laporan**.
+
+### D. Halaman Pelacakan Laporan
+
+Halaman ini digunakan masyarakat untuk memeriksa perkembangan laporan.
+
+Komponen:
+- Kolom untuk memasukkan nomor tiket.
+- Tombol **Cari Laporan**.
+- Informasi ringkas laporan.
+- Status terkini.
+- Riwayat perubahan status yang dapat diakses masyarakat.
+
+### E. Dashboard Admin
+
+Dashboard digunakan admin untuk mengelola laporan yang masuk.
+
+Komponen:
+- Ringkasan jumlah laporan.
+- Daftar laporan masuk.
+- Filter kategori dan status.
+- Detail laporan.
+- Informasi lokasi laporan beserta koordinat atau tautan peta.
+- Fitur verifikasi dan disposisi.
+- Pengelolaan status laporan.
+- Riwayat penanganan.
+
+### F. Halaman Petugas
+
+Halaman petugas digunakan untuk mengakses dan menindaklanjuti laporan yang telah didisposisikan.
+
+Komponen:
+- Daftar laporan yang ditugaskan.
+- Detail laporan.
+- Informasi lokasi dan dokumentasi pendukung.
+- Pembaruan status penanganan.
+- Catatan tindak lanjut.
+
+## 7. Sketsa Prototype
+
+Sketsa berikut merupakan gambaran awal tata letak antarmuka aplikasi.
+
+### A. Beranda Masyarakat
+
+```text
++--------------------------------------------------+
+|       LAPOR IBU WALI KOTA KENDARI                |
+|       Sistem Pelaporan Layanan Publik            |
++--------------------------------------------------+
+|                                                  |
+|   Sampaikan laporan Anda dengan mudah            |
+|                                                  |
+|   [ BUAT LAPORAN ]    [ LACAK LAPORAN ]          |
+|                                                  |
+|          Akses Cepat Pelaporan                   |
+|              [ QR CODE ]                         |
+|                                                  |
+|   Isi Formulir -> Dapatkan Tiket -> Pantau       |
+|                                                  |
++--------------------------------------------------+
+```
+
+### B. Formulir Pelaporan
+
+```text
++--------------------------------------------------+
+|                 FORMULIR LAPORAN                 |
++--------------------------------------------------+
+| Nama Pelapor    : [________________________]     |
+| Kontak          : [________________________]     |
+| Kategori        : [Pilih Kategori           v]   |
+| Judul Laporan   : [________________________]     |
+| Deskripsi       : [________________________]     |
+|                 [________________________]       |
+|                                                  |
+| LOKASI KEJADIAN                                  |
+| +----------------------------------------------+ |
+| |                                              | |
+| |               TAMPILAN MAPS                  | |
+| |                                              | |
+| |                    [ PIN ]                   | |
+| |                                              | |
+| +----------------------------------------------+ |
+|                                                  |
+|       [ GUNAKAN LOKASI TERKINI ]                 |
+|                                                  |
+| Koordinat : [______________________________]    |
+| Alamat    : [______________________________]    |
+|                                                  |
+| Dokumentasi     : [Pilih File]                   |
+|                                                  |
+|                 [ KIRIM LAPORAN ]                |
++--------------------------------------------------+
+```
+
+### C. Halaman Konfirmasi Tiket
+
+```text
++--------------------------------------------------+
+|              LAPORAN BERHASIL DIKIRIM            |
++--------------------------------------------------+
+|                                                  |
+| Nomor Tiket : LPK-2026-0001                      |
+| Kategori    : Pengaduan                          |
+| Status      : Diterima                           |
+|                                                  |
+| Simpan nomor tiket untuk melacak laporan.        |
+|                                                  |
+|                [ LACAK LAPORAN ]                 |
++--------------------------------------------------+
+```
+
+*Nomor tiket pada sketsa hanya contoh tampilan, bukan nomor tiket aktual.*
+
+### D. Dashboard Admin
+
+```text
++--------------------------------------------------+
+|                 DASHBOARD ADMIN                  |
++--------------------------------------------------+
+| Total Laporan | Menunggu Verifikasi | Selesai    |
+|      ...      |         ...         |    ...     |
++--------------------------------------------------+
+| [Cari Laporan] [Kategori v] [Status v]           |
++--------------------------------------------------+
+| No. Tiket | Kategori | Status | Aksi             |
+|-----------|----------|--------|------------------|
+| ...       | ...      | ...    | [Detail]         |
+| ...       | ...      | ...    | [Detail]         |
++--------------------------------------------------+
+| Detail laporan memuat informasi lokasi,          |
+| koordinat, dokumentasi, dan riwayat status.       |
++--------------------------------------------------+
+```
+
+## 8. Status Laporan
+
+Status yang direncanakan untuk proses pengelolaan laporan:
+
+1. **Diterima** — laporan berhasil dikirim dan tercatat dalam sistem.
+2. **Diverifikasi** — laporan telah diperiksa oleh admin.
+3. **Didisposisikan** — laporan telah diteruskan kepada petugas terkait.
+4. **Dalam Penanganan** — laporan sedang ditindaklanjuti.
+5. **Selesai** — penanganan laporan telah diselesaikan.
+
+Status tambahan, seperti memerlukan perbaikan atau ditolak, dapat diterapkan apabila sesuai dengan kebutuhan layanan.
+
+## 9. Teknologi yang Direncanakan
+
+- **Frontend:** HTML, CSS, dan JavaScript.
+- **Backend:** PHP atau framework backend yang sesuai.
+- **Database:** MySQL.
+- **Maps:** Google Maps atau alternatif peta digital yang mendukung pemilihan titik lokasi.
+- **Geolokasi:** Geolocation API pada browser untuk mengambil lokasi terkini setelah izin pengguna diberikan.
+- **QR Code:** Pustaka pembuat QR Code untuk menghasilkan kode akses menuju formulir pelaporan.
+- **Version Control:** Git dan GitHub.
+
+Teknologi final dapat disesuaikan dengan kebutuhan, biaya penggunaan layanan peta, dan hasil analisis sistem.
+
+## 10. Batasan Sistem
+
+- Sistem berfokus pada pencatatan dan manajemen tiket laporan masyarakat.
+- Kategori laporan meliputi pengaduan, aspirasi, dan permohonan informasi.
+- QR Code digunakan sebagai akses cepat menuju formulir pelaporan.
+- Maps digunakan pada formulir untuk membantu masyarakat menentukan lokasi kejadian.
+- Tombol Lokasi Terkini menggunakan layanan geolokasi perangkat setelah izin diberikan.
+- Lokasi dapat dipilih atau disesuaikan secara manual apabila posisi otomatis kurang tepat.
+- Nomor tiket digunakan untuk mengidentifikasi dan melacak laporan.
+- Sistem menyediakan pengelolaan laporan oleh admin dan pembaruan status oleh petugas.
+- Integrasi otomatis WhatsApp, Facebook, dan Instagram bergantung pada ketersediaan API dan izin masing-masing platform.
+- Sistem tidak menggunakan metode Priority Scoring.
+- Maps merupakan komponen pendukung penentuan lokasi, bukan sistem WebGIS tersendiri.
+
+## 11. Tahapan Pengembangan
+
+1. Analisis kebutuhan sistem dan alur pelaporan.
+2. Perancangan proses bisnis dan basis data.
+3. Pembuatan prototype antarmuka masyarakat, admin, dan petugas.
+4. Pengembangan formulir pelaporan dan manajemen tiket.
+5. Integrasi Maps dan fitur Lokasi Terkini.
+6. Pengembangan QR Code dan pelacakan laporan.
+7. Pengembangan dashboard admin dan halaman petugas.
+8. Pengujian fungsi dan alur kerja sistem.
+9. Evaluasi hasil pengujian dan penyusunan dokumentasi.
+
+## 12. Hasil yang Diharapkan
+
+Sistem diharapkan dapat membantu pengelolaan laporan masyarakat secara lebih terstruktur melalui pencatatan tiket, verifikasi, pendistribusian, pemantauan status, dan dokumentasi penanganan laporan.
+
+QR Code mempermudah akses masyarakat menuju formulir, sedangkan Maps dan tombol Lokasi Terkini membantu masyarakat menentukan lokasi kejadian dengan lebih tepat. Seluruh fitur tersebut diharapkan mendukung proses pelaporan dan pemantauan layanan publik secara lebih mudah dan terorganisasi.
+
+Dokumen ini merupakan rancangan awal untuk mendukung proses analisis, pembuatan prototype, implementasi, dan pengujian sistem.
